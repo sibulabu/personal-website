@@ -1,23 +1,39 @@
 import React from 'react';
-import ToolBar from '@material-ui/core/Toolbar'
+import Tabs from '@material-ui/core/Tabs'
 import AppBar from '@material-ui/core/AppBar'
-import NavItem from './NavItem'
 import { Router } from '@reach/router';
 import About from '../views/About'
 import Experience from '../views/Experience'
 import Portfolio from '../views/Portfolio'
 import Contact from '../views/Contact'
+import { makeStyles } from '@material-ui/core/styles';
+import {useState} from 'react'
+import {navigate} from '@reach/router'
+import Tab from '@material-ui/core/Tab'
+
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+  },
+});
 
 const NavBar = () => {
+  const classes = useStyles()
+  const [value, setValue] = useState(0)
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
+
   return (
-    <div>
+    <div className={classes.root}>
       <AppBar position="static" color="default">
-        <ToolBar>
-          <NavItem routeTo="About" label="About"/>
-          <NavItem routeTo="Experience" label="Experience"/>
-          <NavItem routeTo="Portfolio" label="Portfolio"/>
-          <NavItem routeTo="Contact" label="Contact"/>
-        </ToolBar>
+        <Tabs value={value} onChange={handleChange} variant="fullWidth" indicatorColor="primary">
+          <Tab onClick={() => {navigate("/About")}} label="About"/>
+          <Tab onClick={() => {navigate("/Experience")}} label="Experience"/>
+          <Tab onClick={() => {navigate("/Portfolio")}} label="Portfolio"/>
+          <Tab onClick={() => {navigate("/Contact")}} label="Contact"/>
+        </Tabs>
       </AppBar>
 
       <Router>
